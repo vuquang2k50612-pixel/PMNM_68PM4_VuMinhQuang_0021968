@@ -1,6 +1,12 @@
 <?php
-class Sinhvien {
+require_once __DIR__ . '/../models/SinhVienModel.php';
+class Sinhvien{
     public function index(){
-        echo "Controller sinhvien da ket noi thanh cong";
+        $model = new SinhVienModel();
+        $dataSinhVien = $model->getAll();
+        require_once __DIR__ . '/../views/sinhvien/index.php';
     }
 }
+$test = new Sinhvien();
+$test->index();
+?>         
