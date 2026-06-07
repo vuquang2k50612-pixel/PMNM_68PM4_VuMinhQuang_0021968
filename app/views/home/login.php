@@ -10,7 +10,7 @@
         <h3 style="color: red;">Thông báo lỗi: Sai tên đăng nhập hoặc mật khẩu!</h3>
     <?php endif; ?>
 
-    <form action="/auth/login" method="POST">
+    <form action="" method="POST">
         <br>
         <div>
             <label for="username">Username</label>

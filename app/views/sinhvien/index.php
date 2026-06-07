@@ -15,6 +15,12 @@
 <body>
 
     <h2>DANH SÁCH SINH VIÊN</h2>
+    <div style="text-align: center; margin-bottom: 20px;">
+    <a href="/PMNM_68PM4_VuMinhQuang_0021968/public/sinhvien/create" 
+       style="padding: 10px 15px; background-color: #28a745; color: white; text-decoration: none; border-radius: 5px; font-weight: bold;">
+        + Thêm Mới Sinh Viên
+    </a>
+</div>
 
     <table>
         <thead>
@@ -37,7 +43,7 @@
                 <?php endforeach; ?>
             <?php else: ?>
                 <tr>
-                    <td colspan="4">Không có dữ liệu sinh viên nào trong CSDL.</td>
+                    <td colspan="4">Không có dữ liệu sinh viên</td>
                 </tr>
             <?php endif; ?>
         </tbody>
