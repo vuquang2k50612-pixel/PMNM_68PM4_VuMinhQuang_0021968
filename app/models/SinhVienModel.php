@@ -21,6 +21,32 @@ class SinhVienModel {
             return [];
         }
     }
+    public function getTotal() {
+        $sql = 'SELECT COUNT(*) as total FROM sinh_vien';
+        try {
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result['total'];
+        } catch (PDOException $e) {
+            return 0;
+        }
+    }
+
+    public function getPaging($limit, $offset) {
+        $sql = 'SELECT * FROM sinh_vien LIMIT :limit OFFSET :offset';
+        try {
+            $stmt = $this->db->prepare($sql);
+            // Bắt buộc ép kiểu INT để PDO không báo lỗi cú pháp
+            $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
+            $stmt->bindValue(':offset', (int)$offset, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            echo "Loi lay du lieu: " . $e->getMessage();
+            return [];
+        }
+    }
 
     // Hàm thêm sinh viên mới
     public function create($name, $class, $mssv) {
@@ -28,7 +54,6 @@ class SinhVienModel {
         
         try {
             $stmt = $this->db->prepare($sql);
-            // Gán giá trị an toàn
             $stmt->bindParam(':mssv', $mssv);
             $stmt->bindParam(':name', $name);
             $stmt->bindParam(':class', $class);

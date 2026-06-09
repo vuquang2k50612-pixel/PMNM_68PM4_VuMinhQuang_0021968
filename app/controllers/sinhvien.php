@@ -1,9 +1,19 @@
 <?php
 require_once __DIR__ . '/../models/SinhVienModel.php';
 class Sinhvien{
-    public function index(){
+    public function index() {
         $model = new SinhVienModel();
-        $dataSinhVien = $model->getAll();
+        $limit = 5; 
+        
+        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        if ($page < 1) $page = 1;
+        
+        $offset = ($page - 1) * $limit;
+        
+        $dataSinhVien = $model->getPaging($limit, $offset);
+        $totalRecords = $model->getTotal();
+        $totalPages = ceil($totalRecords / $limit); 
+
         require_once __DIR__ . '/../views/sinhvien/index.php';
     }
 

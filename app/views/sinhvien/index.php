@@ -48,6 +48,17 @@
             <?php endif; ?>
         </tbody>
     </table>
+    <div style="margin-top: 20px; text-align: center;">
+        <?php if (isset($totalPages) && $totalPages > 1): ?>
+            <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                <a href="?page=<?= $i ?>" 
+                   style="padding: 8px 12px; margin: 0 5px; text-decoration: none; border: 1px solid #007bff; border-radius: 4px;
+                   <?= ($i == $page) ? 'background-color: #007bff; color: white;' : 'background-color: white; color: #007bff;' ?>">
+                    <?= $i ?>
+                </a>
+            <?php endfor; ?>
+        <?php endif; ?>
+    </div>
 
 </body>
 </html>
