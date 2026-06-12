@@ -29,7 +29,7 @@
                 <th>Mã Sinh Viên</th>
                 <th>Họ và Tên</th>
                 <th>Lớp</th>
-            </tr>
+                <th>Sửa</th> </tr>
         </thead>
         <tbody>
             <?php if (!empty($dataSinhVien)): ?>
@@ -39,11 +39,16 @@
                         <td><?= htmlspecialchars($sv['mssv']) ?></td>
                         <td><?= htmlspecialchars($sv['name']) ?></td>
                         <td><?= htmlspecialchars($sv['class']) ?></td>
+                        
+                        <td>
+                            <a href="/PMNM_68PM4_VuMinhQuang_0021968/public/sinhvien/edit?id=<?= htmlspecialchars($sv['mssv']) ?>" 
+                               style="background-color: #ffc107; color: black; padding: 5px 10px; text-decoration: none; border-radius: 3px; font-weight: bold;">Sửa</a>
+                        </td>
                     </tr>
                 <?php endforeach; ?>
             <?php else: ?>
                 <tr>
-                    <td colspan="4">Không có dữ liệu sinh viên</td>
+                    <td colspan="5">Không có dữ liệu sinh viên</td>
                 </tr>
             <?php endif; ?>
         </tbody>

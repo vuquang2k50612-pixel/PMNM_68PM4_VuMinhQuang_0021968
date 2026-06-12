@@ -64,5 +64,30 @@ class SinhVienModel {
             return false;
         }
     }
+    public function getById($mssv) {
+        $sql = 'SELECT * FROM sinh_vien WHERE mssv = :mssv';
+        try {
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(':mssv', $mssv);
+            $stmt->execute();
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+
+    public function update($mssv, $name, $class) {
+        $sql = 'UPDATE sinh_vien SET name = :name, class = :class WHERE mssv = :mssv';
+        try {
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(':mssv', $mssv);
+            $stmt->bindParam(':name', $name);
+            $stmt->bindParam(':class', $class);
+            return $stmt->execute();
+        } catch (PDOException $e) {
+            echo "Lỗi cập nhật: " . $e->getMessage();
+            return false;
+        }
+    }
 }
 ?>
