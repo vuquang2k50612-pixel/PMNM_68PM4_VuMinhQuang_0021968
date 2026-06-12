@@ -39,6 +39,9 @@ class App {
                      $svController->edit();
                  }
             } 
+            elseif (strpos($url, '/sinhvien/delete') !== false) {
+                 $svController->delete_sv();
+            }
             
             else {
                  $svController->index();

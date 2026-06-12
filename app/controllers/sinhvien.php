@@ -68,6 +68,16 @@ public function edit() {
             }
         }
     }
+    public function delete_sv() {
+        if (isset($_GET['id'])) {
+            $mssv = $_GET['id'];
+            $model = new SinhVienModel();
+            $model->delete($mssv);
+        }
+        // Xóa xong thì tự động tải lại trang danh sách
+        header("Location: /PMNM_68PM4_VuMinhQuang_0021968/public/sinhvien");
+        exit();
+    }
 }
 
 ?>         

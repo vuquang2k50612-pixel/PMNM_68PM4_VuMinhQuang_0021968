@@ -37,7 +37,6 @@ class SinhVienModel {
         $sql = 'SELECT * FROM sinh_vien LIMIT :limit OFFSET :offset';
         try {
             $stmt = $this->db->prepare($sql);
-            // Bắt buộc ép kiểu INT để PDO không báo lỗi cú pháp
             $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
             $stmt->bindValue(':offset', (int)$offset, PDO::PARAM_INT);
             $stmt->execute();
@@ -86,6 +85,17 @@ class SinhVienModel {
             return $stmt->execute();
         } catch (PDOException $e) {
             echo "Lỗi cập nhật: " . $e->getMessage();
+            return false;
+        }
+    }
+    public function delete($mssv) {
+        $sql = 'DELETE FROM sinh_vien WHERE mssv = :mssv';
+        try {
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(':mssv', $mssv);
+            return $stmt->execute();
+        } catch (PDOException $e) {
+            echo "Lỗi xóa dữ liệu: " . $e->getMessage();
             return false;
         }
     }
