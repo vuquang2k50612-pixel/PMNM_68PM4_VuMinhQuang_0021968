@@ -48,22 +48,23 @@ class SinhVienModel {
     }
 
     // Hàm thêm sinh viên mới
-    public function create($name, $class, $mssv) {
-        $sql = "INSERT INTO sinh_vien (mssv, name, class) VALUES (:mssv, :name, :class)";
-        
+    public function create($name, $class, $mssv, $malop) {
+        $sql = "INSERT INTO sinh_vien (mssv, name, class, malop) VALUES (:mssv, :name, :class, :malop)";
         try {
             $stmt = $this->db->prepare($sql);
-            $stmt->bindParam(':mssv', $mssv);
-            $stmt->bindParam(':name', $name);
-            $stmt->bindParam(':class', $class);
-            $stmt->bindParam(':malop', $malop);
-            
-            return $stmt->execute(); 
-        } catch (PDOException $e) {
-            echo "Lỗi thêm dữ liệu: " . $e->getMessage();
-            return false;
-        }
+            return $stmt->execute(['mssv'=>$mssv, 'name'=>$name, 'class'=>$class, 'malop'=>$malop]); 
+        } catch (PDOException $e) { return false; }
     }
+
+    // Sửa hàm update
+    public function update($mssv, $name, $class, $malop) {
+        $sql = 'UPDATE sinh_vien SET name = :name, class = :class, malop = :malop WHERE mssv = :mssv';
+        try {
+            $stmt = $this->db->prepare($sql);
+            return $stmt->execute(['mssv'=>$mssv, 'name'=>$name, 'class'=>$class, 'malop'=>$malop]);
+        } catch (PDOException $e) { return false; }
+    }
+    
     public function getById($mssv) {
         $sql = 'SELECT * FROM sinh_vien WHERE mssv = :mssv';
         try {

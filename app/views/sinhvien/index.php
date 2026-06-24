@@ -30,6 +30,7 @@
                 <th>Họ và Tên</th>
                 <th>Lớp</th>
                 <th>Hành động</th> </tr>
+                <th>Mã Lớp</th>
         </thead>
         <tbody>
             <?php if (!empty($dataSinhVien)): ?>
@@ -39,6 +40,7 @@
                         <td><?= htmlspecialchars($sv['mssv']) ?></td>
                         <td><?= htmlspecialchars($sv['name']) ?></td>
                         <td><?= htmlspecialchars($sv['class']) ?></td>
+                        <td><?= htmlspecialchars($sv['malop'] ?? '') ?></td>
                         
                         <td>
                             <a href="/PMNM_68PM4_VuMinhQuang_0021968/public/sinhvien/edit?id=<?= htmlspecialchars($sv['mssv']) ?>" 

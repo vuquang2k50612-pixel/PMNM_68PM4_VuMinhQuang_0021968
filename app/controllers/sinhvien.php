@@ -26,9 +26,10 @@ class Sinhvien{
             $name = $_POST['name'] ?? '';
             $class = $_POST['class'] ?? '';
             $mssv = $_POST['mssv'] ?? '';
+            $malop = $_POST['malop'] ?? '';
 
             $model = new SinhVienModel();
-            $result = $model->create($name,$class,$mssv);
+           $result = $model->create($name, $class, $mssv, $malop);
 
             if ($result) {
                 header("Location: /PMNM_68PM4_VuMinhQuang_0021968/public/sinhvien");
@@ -55,9 +56,10 @@ public function edit() {
             $mssv = $_POST['mssv'] ?? ''; 
             $name = $_POST['name'] ?? '';
             $class = $_POST['class'] ?? '';
+            $malop = $_POST['malop'] ?? '';
 
             $model = new SinhVienModel();
-            $result = $model->update($mssv, $name, $class);
+           $result = $model->update($mssv, $name, $class, $malop);
 
             if ($result) {
             
