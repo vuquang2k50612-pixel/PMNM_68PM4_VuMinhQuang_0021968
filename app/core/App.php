@@ -47,6 +47,11 @@ class App {
                  $svController->index();
             }
         }
+        elseif (strpos($url, '/lophoc') !== false) {
+            require_once '../app/controllers/lophoc.php';
+            $lhController = new Lophoc();
+            $lhController->index(); // Tạm thời thế đã cho đủ CRUD
+        }
 
         // Trang chủ 
         else {

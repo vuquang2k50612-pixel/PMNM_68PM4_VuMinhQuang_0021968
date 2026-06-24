@@ -43,16 +43,16 @@ public function edit() {
         if (isset($_GET['id'])) {
             $mssv = $_GET['id'];
             $model = new SinhVienModel();
-            $sv = $model->getById($mssv); // Lấy data cũ
+            $sv = $model->getById($mssv); 
             
-            // Gọi View form sửa
+            
             require_once __DIR__ . '/../views/sinhvien/edit.php';
         }
     }
 
     public function update_sv() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $mssv = $_POST['mssv'] ?? ''; // MSSV thường không cho sửa, dùng làm khóa
+            $mssv = $_POST['mssv'] ?? ''; 
             $name = $_POST['name'] ?? '';
             $class = $_POST['class'] ?? '';
 
@@ -60,7 +60,7 @@ public function edit() {
             $result = $model->update($mssv, $name, $class);
 
             if ($result) {
-                // Thành công thì đá về trang danh sách
+            
                 header("Location: /PMNM_68PM4_VuMinhQuang_0021968/public/sinhvien");
                 exit();
             } else {
@@ -74,13 +74,11 @@ public function edit() {
             $model = new SinhVienModel();
             $model->delete($mssv);
         }
-        // Xóa xong thì tự động tải lại trang danh sách
         header("Location: /PMNM_68PM4_VuMinhQuang_0021968/public/sinhvien");
         exit();
     }
 }
 public function create(){
-        // Gọi model Lớp học để lấy danh sách đổ ra Dropdown
         require_once __DIR__ . '/../models/LopHocModel.php';
         $lopModel = new LopHocModel();
         $dataLopHoc = $lopModel->getAll();
@@ -93,10 +91,10 @@ public function create(){
             $name = $_POST['name'] ?? '';
             $class = $_POST['class'] ?? '';
             $mssv = $_POST['mssv'] ?? '';
-            $malop = $_POST['malop'] ?? ''; // Hứng thêm malop
+            $malop = $_POST['malop'] ?? ''; 
 
             $model = new SinhVienModel();
-            $result = $model->create($name, $class, $mssv, $malop); // Truyền thêm malop
+            $result = $model->create($name, $class, $mssv, $malop); 
 
             if ($result) {
                 header("Location: /PMNM_68PM4_VuMinhQuang_0021968/public/sinhvien");
