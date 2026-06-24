@@ -56,6 +56,7 @@ class SinhVienModel {
             $stmt->bindParam(':mssv', $mssv);
             $stmt->bindParam(':name', $name);
             $stmt->bindParam(':class', $class);
+            $stmt->bindParam(':malop', $malop);
             
             return $stmt->execute(); 
         } catch (PDOException $e) {
@@ -82,6 +83,7 @@ class SinhVienModel {
             $stmt->bindParam(':mssv', $mssv);
             $stmt->bindParam(':name', $name);
             $stmt->bindParam(':class', $class);
+            $stmt->bindParam(':malop', $malop);
             return $stmt->execute();
         } catch (PDOException $e) {
             echo "Lỗi cập nhật: " . $e->getMessage();
