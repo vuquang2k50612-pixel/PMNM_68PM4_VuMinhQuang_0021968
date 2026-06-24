@@ -79,5 +79,66 @@ public function edit() {
         exit();
     }
 }
+public function create(){
+        // Gọi model Lớp học để lấy danh sách đổ ra Dropdown
+        require_once __DIR__ . '/../models/LopHocModel.php';
+        $lopModel = new LopHocModel();
+        $dataLopHoc = $lopModel->getAll();
+        
+        require_once __DIR__.'/../views/sinhvien/create.php';
+    }
+     
+    public function store(){
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $name = $_POST['name'] ?? '';
+            $class = $_POST['class'] ?? '';
+            $mssv = $_POST['mssv'] ?? '';
+            $malop = $_POST['malop'] ?? ''; // Hứng thêm malop
+
+            $model = new SinhVienModel();
+            $result = $model->create($name, $class, $mssv, $malop); // Truyền thêm malop
+
+            if ($result) {
+                header("Location: /PMNM_68PM4_VuMinhQuang_0021968/public/sinhvien");
+                exit();
+            } else {
+                echo "<h3>Thêm mới sinh viên thất bại!</h3>";
+            }
+        }
+    }
+
+    public function edit() {
+        if (isset($_GET['id'])) {
+            $mssv = $_GET['id'];
+            $model = new SinhVienModel();
+            $sv = $model->getById($mssv); 
+            
+            // Lấy danh sách lớp để chọn lại
+            require_once __DIR__ . '/../models/LopHocModel.php';
+            $lopModel = new LopHocModel();
+            $dataLopHoc = $lopModel->getAll();
+
+            require_once __DIR__ . '/../views/sinhvien/edit.php';
+        }
+    }
+
+    public function update_sv() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $mssv = $_POST['mssv'] ?? ''; 
+            $name = $_POST['name'] ?? '';
+            $class = $_POST['class'] ?? '';
+            $malop = $_POST['malop'] ?? ''; // Hứng thêm malop
+
+            $model = new SinhVienModel();
+            $result = $model->update($mssv, $name, $class, $malop); // Truyền thêm malop
+
+            if ($result) {
+                header("Location: /PMNM_68PM4_VuMinhQuang_0021968/public/sinhvien");
+                exit();
+            } else {
+                echo "<h3>Cập nhật thất bại!</h3>";
+            }
+        }
+    }
 
 ?>         
