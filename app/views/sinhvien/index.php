@@ -26,6 +26,11 @@
             <?php endforeach; ?>
         </select>
         <button type="submit" style="padding: 5px 10px;">Tìm kiếm / Lọc</button>
+        <select name="pageSize" onchange="this.form.submit()">
+            <option value="5" <?= (isset($_GET['pageSize']) && $_GET['pageSize'] == 5) ? 'selected' : '' ?>>5 dòng/trang</option>
+            <option value="10" <?= (isset($_GET['pageSize']) && $_GET['pageSize'] == 10) ? 'selected' : '' ?>>10 dòng/trang</option>
+            <option value="20" <?= (isset($_GET['pageSize']) && $_GET['pageSize'] == 20) ? 'selected' : '' ?>>20 dòng/trang</option>
+        </select>
     </form>
     <div style="text-align: center; margin-bottom: 20px;">
         <a href="/PMNM_68PM4_VuMinhQuang_0021968/public/sinhvien/create" 
@@ -34,7 +39,7 @@
         </a>
     </div>
 
-    <table>
+    <table class="table table-hover table-bordered table-striped shadow-sm bg-white">
         <thead>
         <tr>
             <th>STT</th>

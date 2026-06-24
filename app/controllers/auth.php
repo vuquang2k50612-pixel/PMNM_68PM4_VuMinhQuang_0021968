@@ -14,10 +14,10 @@ class auth {
                 if (isset($_POST['remember']) && $_POST['remember'] == true) {
                     setcookie('username', $username, time() + 3600, "/");
                 }
-                header("Location: /PMNM_68PM4_VuMinhQuang_0021968/public/");
+               header("Location: /PMNM_68PM4_VUMINHQUANG_0021968/public/sinhvien");
                 exit();
             } else { 
-                header("Location: /PMNM_68PM4_VuMinhQuang_0021968/public/auth/login?error=1");
+                header("Location: /PMNM_68PM4_VUMINHQUANG_0021968/public/auth/login?error=1");
                 exit();
             }
         }

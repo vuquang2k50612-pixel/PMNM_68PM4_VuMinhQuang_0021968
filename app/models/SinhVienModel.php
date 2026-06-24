@@ -1,5 +1,4 @@
 <?php
-
 require_once __DIR__ . '/../core/Database.php';
 
 class SinhVienModel {
@@ -17,11 +16,11 @@ class SinhVienModel {
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
-            echo "Loi lay du lieu: " . $e->getMessage();
             return [];
         }
     }
-   public function getTotal($search = '', $malop = '') {
+
+    public function getTotal($search = '', $malop = '') {
         $sql = 'SELECT COUNT(*) as total FROM sinh_vien WHERE (mssv LIKE :search OR name LIKE :search)';
         if ($malop != '') $sql .= ' AND malop = :malop';
         
@@ -33,7 +32,7 @@ class SinhVienModel {
         return $stmt->fetch(PDO::FETCH_ASSOC)['total'];
     }
 
-   public function getPaging($limit, $offset, $search = '', $malop = '', $sort = 'mssv', $dir = 'ASC') {
+    public function getPaging($limit, $offset, $search = '', $malop = '', $sort = 'mssv', $dir = 'ASC') {
         $allowedSort = ['mssv', 'name'];
         if (!in_array($sort, $allowedSort)) $sort = 'mssv';
         $dir = (strtoupper($dir) === 'DESC') ? 'DESC' : 'ASC';
@@ -52,7 +51,6 @@ class SinhVienModel {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // Hàm thêm sinh viên mới
     public function create($name, $class, $mssv, $malop) {
         $sql = "INSERT INTO sinh_vien (mssv, name, class, malop) VALUES (:mssv, :name, :class, :malop)";
         try {
@@ -61,7 +59,6 @@ class SinhVienModel {
         } catch (PDOException $e) { return false; }
     }
 
-    // Sửa hàm update
     public function update($mssv, $name, $class, $malop) {
         $sql = 'UPDATE sinh_vien SET name = :name, class = :class, malop = :malop WHERE mssv = :mssv';
         try {
@@ -82,20 +79,6 @@ class SinhVienModel {
         }
     }
 
-    public function update($mssv, $name, $class) {
-        $sql = 'UPDATE sinh_vien SET name = :name, class = :class WHERE mssv = :mssv';
-        try {
-            $stmt = $this->db->prepare($sql);
-            $stmt->bindParam(':mssv', $mssv);
-            $stmt->bindParam(':name', $name);
-            $stmt->bindParam(':class', $class);
-            $stmt->bindParam(':malop', $malop);
-            return $stmt->execute();
-        } catch (PDOException $e) {
-            echo "Lỗi cập nhật: " . $e->getMessage();
-            return false;
-        }
-    }
     public function delete($mssv) {
         $sql = 'DELETE FROM sinh_vien WHERE mssv = :mssv';
         try {
@@ -103,7 +86,6 @@ class SinhVienModel {
             $stmt->bindParam(':mssv', $mssv);
             return $stmt->execute();
         } catch (PDOException $e) {
-            echo "Lỗi xóa dữ liệu: " . $e->getMessage();
             return false;
         }
     }
