@@ -12,12 +12,15 @@ class Sinhvien{
         $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
         if ($page < 1) $page = 1;
         $offset = ($page - 1) * $limit;
+        $sort = $_GET['sort'] ?? 'mssv';
+        $dir = $_GET['dir'] ?? 'ASC';
+
         
         $model = new SinhVienModel();
         $totalRecords = $model->getTotal($search, $malop);
         $totalPages = ceil($totalRecords / $limit); 
-        $dataSinhVien = $model->getPaging($limit, $offset, $search, $malop);
-
+       $dataSinhVien = $model->getPaging($limit, $offset, $search, $malop, $sort, $dir);
+      
         require_once __DIR__ . '/../views/sinhvien/index.php';
     }
 

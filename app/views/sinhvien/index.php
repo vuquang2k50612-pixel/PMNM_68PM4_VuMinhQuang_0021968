@@ -36,14 +36,28 @@
 
     <table>
         <thead>
-            <tr>
-                <th>STT</th>
-                <th>Mã Sinh Viên</th>
-                <th>Họ và Tên</th>
-                <th>Lớp</th>
-                <th>Hành động</th> </tr>
-                <th>Mã Lớp</th>
-        </thead>
+        <tr>
+            <th>STT</th>
+            <?php 
+                $nextDir = (isset($_GET['dir']) && $_GET['dir'] == 'ASC') ? 'DESC' : 'ASC';
+                $curSearch = htmlspecialchars($_GET['search'] ?? '');
+                $curLop = htmlspecialchars($_GET['malop'] ?? '');
+            ?>
+            <th>
+                <a href="?search=<?= $curSearch ?>&malop=<?= $curLop ?>&sort=mssv&dir=<?= $nextDir ?>" style="color: white; text-decoration: none;">
+                    Mã Sinh Viên ↕
+                </a>
+            </th>
+            <th>
+                <a href="?search=<?= $curSearch ?>&malop=<?= $curLop ?>&sort=name&dir=<?= $nextDir ?>" style="color: white; text-decoration: none;">
+                    Họ và Tên ↕
+                </a>
+            </th>
+            <th>Lớp</th>
+            <th>Mã Lớp</th>
+            <th>Hành động</th> 
+        </tr>
+    </thead>
         <tbody>
             <?php if (!empty($dataSinhVien)): ?>
                 <?php $stt = 1; foreach($dataSinhVien as $sv): ?>
