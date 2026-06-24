@@ -21,30 +21,35 @@ class SinhVienModel {
             return [];
         }
     }
-    public function getTotal() {
-        $sql = 'SELECT COUNT(*) as total FROM sinh_vien';
-        try {
-            $stmt = $this->db->prepare($sql);
-            $stmt->execute();
-            $result = $stmt->fetch(PDO::FETCH_ASSOC);
-            return $result['total'];
-        } catch (PDOException $e) {
-            return 0;
-        }
+   public function getTotal($search = '', $malop = '') {
+        $sql = 'SELECT COUNT(*) as total FROM sinh_vien WHERE (mssv LIKE :search OR name LIKE :search)';
+        if ($malop != '') $sql .= ' AND malop = :malop';
+        
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(':search', "%$search%");
+        if ($malop != '') $stmt->bindValue(':malop', $malop);
+        
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC)['total'];
     }
 
-    public function getPaging($limit, $offset) {
-        $sql = 'SELECT * FROM sinh_vien LIMIT :limit OFFSET :offset';
-        try {
-            $stmt = $this->db->prepare($sql);
-            $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
-            $stmt->bindValue(':offset', (int)$offset, PDO::PARAM_INT);
-            $stmt->execute();
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } catch (PDOException $e) {
-            echo "Loi lay du lieu: " . $e->getMessage();
-            return [];
-        }
+   public function getPaging($limit, $offset, $search = '', $malop = '', $sort = 'mssv', $dir = 'ASC') {
+        $allowedSort = ['mssv', 'name'];
+        if (!in_array($sort, $allowedSort)) $sort = 'mssv';
+        $dir = (strtoupper($dir) === 'DESC') ? 'DESC' : 'ASC';
+
+        $sql = "SELECT * FROM sinh_vien WHERE (mssv LIKE :search OR name LIKE :search)";
+        if ($malop != '') $sql .= " AND malop = :malop";
+        $sql .= " ORDER BY $sort $dir LIMIT :limit OFFSET :offset";
+
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(':search', "%$search%");
+        if ($malop != '') $stmt->bindValue(':malop', $malop);
+        $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
+        $stmt->bindValue(':offset', (int)$offset, PDO::PARAM_INT);
+        
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     // Hàm thêm sinh viên mới
@@ -64,7 +69,7 @@ class SinhVienModel {
             return $stmt->execute(['mssv'=>$mssv, 'name'=>$name, 'class'=>$class, 'malop'=>$malop]);
         } catch (PDOException $e) { return false; }
     }
-    
+
     public function getById($mssv) {
         $sql = 'SELECT * FROM sinh_vien WHERE mssv = :mssv';
         try {

@@ -15,6 +15,18 @@
 <body>
 
     <h2>DANH SÁCH SINH VIÊN</h2>
+    <form method="GET" action="/PMNM_68PM4_VuMinhQuang_0021968/public/sinhvien" style="text-align: center; margin-bottom: 20px;">
+        <input type="text" name="search" value="<?= htmlspecialchars($_GET['search'] ?? '') ?>" placeholder="Nhập MSSV hoặc Họ tên...">
+        <select name="malop">
+            <option value="">-- Tất cả lớp --</option>
+            <?php foreach ($dataLopHoc ?? [] as $lop): ?>
+                <option value="<?= htmlspecialchars($lop['malop']) ?>" <?= (isset($_GET['malop']) && $_GET['malop'] == $lop['malop']) ? 'selected' : '' ?>>
+                    <?= htmlspecialchars($lop['tenlop']) ?>
+                </option>
+            <?php endforeach; ?>
+        </select>
+        <button type="submit" style="padding: 5px 10px;">Tìm kiếm / Lọc</button>
+    </form>
     <div style="text-align: center; margin-bottom: 20px;">
         <a href="/PMNM_68PM4_VuMinhQuang_0021968/public/sinhvien/create" 
            style="padding: 10px 15px; background-color: #28a745; color: white; text-decoration: none; border-radius: 5px; font-weight: bold;">

@@ -1,18 +1,22 @@
 <?php
 require_once __DIR__ . '/../models/SinhVienModel.php';
 class Sinhvien{
-    public function index() {
-        $model = new SinhVienModel();
-        $limit = 5; 
+   public function index() {
+        require_once __DIR__ . '/../models/LopHocModel.php';
+        $lopModel = new LopHocModel();
+        $dataLopHoc = $lopModel->getAll(); 
+        $search = $_GET['search'] ?? '';
+        $malop = $_GET['malop'] ?? '';
         
+        $limit = 5; 
         $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
         if ($page < 1) $page = 1;
-        
         $offset = ($page - 1) * $limit;
         
-        $dataSinhVien = $model->getPaging($limit, $offset);
-        $totalRecords = $model->getTotal();
+        $model = new SinhVienModel();
+        $totalRecords = $model->getTotal($search, $malop);
         $totalPages = ceil($totalRecords / $limit); 
+        $dataSinhVien = $model->getPaging($limit, $offset, $search, $malop);
 
         require_once __DIR__ . '/../views/sinhvien/index.php';
     }
